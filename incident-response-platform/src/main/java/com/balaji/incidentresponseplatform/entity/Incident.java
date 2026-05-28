@@ -21,22 +21,16 @@ public class Incident {
 
     @Column(length = 2000)
     private String description;
-
     private String severity;
-
     private String status;
-
     private String source;
-
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
-
     private String assignedTo;
-
     private String priority;
-
     private String serviceNowTicketNumber;
+    private Long serviceId;
+    private String serviceName;
 
     public String getPriority() {
         return priority;
@@ -60,5 +54,20 @@ public class Incident {
 
     public void setServiceNowTicketNumber(String serviceNowTicketNumber) {
         this.serviceNowTicketNumber = serviceNowTicketNumber;
+    }
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 }

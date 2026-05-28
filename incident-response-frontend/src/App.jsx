@@ -46,6 +46,7 @@ function App() {
     description: "",
     severity: "HIGH",
     source: "",
+    serviceId: "",
   });
 
   const [newLog, setNewLog] = useState({
@@ -253,6 +254,7 @@ function App() {
       description: "",
       severity: "HIGH",
       source: "",
+      serviceId: "",
     });
 
     loadData();
@@ -471,6 +473,24 @@ function App() {
           <option value="LOW">LOW</option>
         </select>
 
+        <select
+  value={newIncident.serviceId}
+  onChange={(e) =>
+    setNewIncident({
+      ...newIncident,
+      serviceId: e.target.value,
+    })
+  }
+>
+  <option value="">Select Affected Service</option>
+
+  {services.map((service) => (
+    <option key={service.id} value={service.id}>
+      {service.serviceName}
+    </option>
+  ))}
+</select>
+
         <input
           placeholder="Source"
           value={newIncident.source}
@@ -539,6 +559,7 @@ function App() {
             <tr>
               <th>ID</th>
               <th>Title</th>
+              <th>Service</th>
               <th>Severity</th>
               <th>Priority</th>
               <th>Status</th>
@@ -557,6 +578,7 @@ function App() {
               >
                 <td>{incident.id}</td>
                 <td>{incident.title}</td>
+                <td>{incident.serviceName || "-"}</td>
                 <td>
                   <span className={`badge severity-${incident.severity?.toLowerCase()}`}>
                     {incident.severity}
@@ -642,6 +664,7 @@ function App() {
           <div className="details-grid">
             <div><strong>ID:</strong> {selectedIncident.id}</div>
             <div><strong>Severity:</strong> {selectedIncident.severity}</div>
+            <div><strong>Affected Service:</strong> {selectedIncident.serviceName || "N/A"}</div>
 
             <div>
               <strong>Priority:</strong>

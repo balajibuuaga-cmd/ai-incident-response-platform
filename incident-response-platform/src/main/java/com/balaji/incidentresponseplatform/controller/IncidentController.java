@@ -9,7 +9,8 @@ import com.balaji.incidentresponseplatform.repository.IncidentHistoryRepository;
 import com.balaji.incidentresponseplatform.repository.IncidentRepository;
 import com.balaji.incidentresponseplatform.service.WebSocketNotificationService;
 import org.springframework.web.bind.annotation.*;
-
+import com.balaji.incidentresponseplatform.entity.BusinessService;
+import com.balaji.incidentresponseplatform.repository.BusinessServiceRepository;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -24,25 +25,49 @@ public class IncidentController {
     private final IncidentCommentRepository commentRepository;
     private final IncidentHistoryRepository historyRepository;
     private final WebSocketNotificationService notificationService;
+    private final BusinessServiceRepository businessServiceRepository;
+
 
     public IncidentController(
             IncidentRepository incidentRepository,
-            IncidentCommentRepository commentRepository,
             IncidentHistoryRepository historyRepository,
-            WebSocketNotificationService notificationService) {
-
+            IncidentCommentRepository commentRepository,
+            WebSocketNotificationService notificationService,
+            BusinessServiceRepository businessServiceRepository
+    ) {
         this.incidentRepository = incidentRepository;
-        this.commentRepository = commentRepository;
         this.historyRepository = historyRepository;
+        this.commentRepository = commentRepository;
         this.notificationService = notificationService;
+        this.businessServiceRepository = businessServiceRepository;
     }
 
     @PostMapping
     public Incident createIncident(@RequestBody Incident incident) {
+
         incident.setStatus("OPEN");
         incident.setCreatedAt(LocalDateTime.now());
         incident.setUpdatedAt(LocalDateTime.now());
-        incident.setPriority(calculatePriority(incident.getSeverity(), incident.getStatus()));
+
+        incident.setPriority(
+                calculatePriority(
+                        incident.getSeverity(),
+                        incident.getStatus()
+                )
+        );
+
+        // ADD THIS BLOCK HERE
+        if (incident.getServiceId() != null) {
+
+            BusinessService service =
+                    businessServiceRepository.findById(
+                            incident.getServiceId()
+                    ).orElseThrow(() ->
+                            new RuntimeException("Business service not found")
+                    );
+
+            incident.setServiceName(service.getServiceName());
+        }
 
         Incident savedIncident = incidentRepository.save(incident);
 
