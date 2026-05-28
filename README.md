@@ -142,6 +142,9 @@ docker compose down
 - AI-generated remediation suggestions
 - Incident timeline/history tracking
 - Dockerized full-stack deployment
+- Business service inventory management
+- Incident-to-service mapping
+- Service impact visibility for security incidents
 
 ---
 
