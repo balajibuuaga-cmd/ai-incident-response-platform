@@ -294,3 +294,26 @@ th {
   background: #991b1b;
   color: white;
 }
+
+.criticality-low,
+.service-status-active {
+  background: #14532d;
+  color: #bbf7d0;
+}
+
+.criticality-medium,
+.service-status-maintenance {
+  background: #78350f;
+  color: #fde68a;
+}
+
+.criticality-high {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.criticality-critical,
+.service-status-down {
+  background: #991b1b;
+  color: white;
+}

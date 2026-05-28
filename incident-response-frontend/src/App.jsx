@@ -20,6 +20,7 @@ const COLORS = ["#ef4444", "#f59e0b", "#22c55e", "#3b82f6"];
 function App() {
   const [incidents, setIncidents] = useState([]);
   const [logs, setLogs] = useState([]);
+  const [services, setServices] = useState([]);
   const [stats, setStats] = useState({});
   const [selectedIncident, setSelectedIncident] = useState(null);
   const [editIncident, setEditIncident] = useState(null);
@@ -53,14 +54,25 @@ function App() {
     message: "",
   });
 
+  const [newService, setNewService] = useState({
+    serviceName: "",
+    ownerTeam: "",
+    environment: "Production",
+    criticality: "HIGH",
+    status: "ACTIVE",
+    description: "",
+  });
+
   const loadData = async () => {
     const incidentRes = await axios.get("http://localhost:8080/api/incidents");
     const statsRes = await axios.get("http://localhost:8080/api/incidents/stats");
     const logsRes = await axios.get("http://localhost:8080/api/logs");
+    const servicesRes = await axios.get("http://localhost:8080/api/services");
 
     setIncidents(incidentRes.data);
     setStats(statsRes.data);
     setLogs(logsRes.data);
+    setServices(servicesRes.data);
   };
 
   const connectWebSocket = () => {
@@ -147,6 +159,28 @@ function App() {
 
     setSelectedIncident(updatedIncidentRes.data);
     setEditIncident(updatedIncidentRes.data);
+    loadData();
+  };
+
+  const createService = async () => {
+    if (!newService.serviceName.trim()) return;
+
+    await axios.post("http://localhost:8080/api/services", newService);
+
+    setNewService({
+      serviceName: "",
+      ownerTeam: "",
+      environment: "Production",
+      criticality: "HIGH",
+      status: "ACTIVE",
+      description: "",
+    });
+
+    loadData();
+  };
+
+  const deleteService = async (serviceId) => {
+    await axios.delete(`http://localhost:8080/api/services/${serviceId}`);
     loadData();
   };
 
@@ -279,7 +313,7 @@ function App() {
       <div className="header">
         <div>
           <h1>AI Incident Response Dashboard</h1>
-          <p>Monitor incidents, security logs, and automated alerts</p>
+          <p>Monitor incidents, security logs, business services, and automated alerts</p>
         </div>
         <button onClick={loadData}>Refresh</button>
       </div>
@@ -318,6 +352,99 @@ function App() {
             </BarChart>
           </ResponsiveContainer>
         </div>
+      </div>
+
+      <div className="form-card">
+        <h2>Create Business Service</h2>
+
+        <input
+          placeholder="Service Name"
+          value={newService.serviceName}
+          onChange={(e) => setNewService({ ...newService, serviceName: e.target.value })}
+        />
+
+        <input
+          placeholder="Owner Team"
+          value={newService.ownerTeam}
+          onChange={(e) => setNewService({ ...newService, ownerTeam: e.target.value })}
+        />
+
+        <input
+          placeholder="Environment"
+          value={newService.environment}
+          onChange={(e) => setNewService({ ...newService, environment: e.target.value })}
+        />
+
+        <select
+          value={newService.criticality}
+          onChange={(e) => setNewService({ ...newService, criticality: e.target.value })}
+        >
+          <option value="LOW">LOW</option>
+          <option value="MEDIUM">MEDIUM</option>
+          <option value="HIGH">HIGH</option>
+          <option value="CRITICAL">CRITICAL</option>
+        </select>
+
+        <select
+          value={newService.status}
+          onChange={(e) => setNewService({ ...newService, status: e.target.value })}
+        >
+          <option value="ACTIVE">ACTIVE</option>
+          <option value="DOWN">DOWN</option>
+          <option value="MAINTENANCE">MAINTENANCE</option>
+        </select>
+
+        <textarea
+          placeholder="Description"
+          value={newService.description}
+          onChange={(e) => setNewService({ ...newService, description: e.target.value })}
+        />
+
+        <button onClick={createService}>Create Service</button>
+      </div>
+
+      <div className="table-card">
+        <h2>Business Services</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Service Name</th>
+              <th>Owner Team</th>
+              <th>Environment</th>
+              <th>Criticality</th>
+              <th>Status</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {services.map((service) => (
+              <tr key={service.id}>
+                <td>{service.id}</td>
+                <td>{service.serviceName}</td>
+                <td>{service.ownerTeam}</td>
+                <td>{service.environment}</td>
+                <td>
+                  <span className={`badge criticality-${service.criticality?.toLowerCase()}`}>
+                    {service.criticality}
+                  </span>
+                </td>
+                <td>
+                  <span className={`badge service-status-${service.status?.toLowerCase()}`}>
+                    {service.status}
+                  </span>
+                </td>
+                <td>{service.description}</td>
+                <td>
+                  <button onClick={() => deleteService(service.id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <div className="form-card">
@@ -681,3 +808,4 @@ function App() {
 }
 
 export default App;
+
