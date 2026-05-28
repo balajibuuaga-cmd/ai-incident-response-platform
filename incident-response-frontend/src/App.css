@@ -1,0 +1,296 @@
+body {
+  margin: 0;
+  background: #0f172a;
+  color: #e5e7eb;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  padding: 32px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.header p {
+  color: #94a3b8;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.card,
+.table-card,
+.form-card,
+.details-panel {
+  background: #111827;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.card h3 {
+  color: #94a3b8;
+  margin: 0;
+  font-size: 14px;
+}
+
+.card p {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 12px 0 0;
+}
+
+.form-card {
+  margin-bottom: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.form-card input,
+.form-card textarea,
+.filters input,
+.comment-form input,
+.comment-form textarea {
+  background: #0f172a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.form-card textarea,
+.comment-form textarea {
+  min-height: 90px;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filters input {
+  flex: 1;
+}
+
+select {
+  padding: 8px;
+  border-radius: 8px;
+  margin-left: 10px;
+  background: #0f172a;
+  color: white;
+  border: 1px solid #334155;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px;
+  border-bottom: 1px solid #334155;
+  text-align: left;
+}
+
+th {
+  color: #94a3b8;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background: #1e293b;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.severity-high {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.severity-medium {
+  background: #78350f;
+  color: #fde68a;
+}
+
+.severity-low {
+  background: #14532d;
+  color: #bbf7d0;
+}
+
+.status-open {
+  background: #1e3a8a;
+  color: #bfdbfe;
+}
+
+.status-in_progress {
+  background: #78350f;
+  color: #fde68a;
+}
+
+.status-resolved {
+  background: #14532d;
+  color: #bbf7d0;
+}
+
+.status-closed {
+  background: #374151;
+  color: #d1d5db;
+}
+
+.details-panel {
+  margin-top: 28px;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #334155;
+}
+
+.timeline-item,
+.comment {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 10px;
+}
+
+.comment-form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.chart-card {
+  background: #111827;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #1e3a8a;
+  color: #bfdbfe;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid #3b82f6;
+  z-index: 999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.task-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.task-form input {
+  flex: 1;
+  background: #0f172a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.task-item {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item input {
+  margin-right: 10px;
+}
+
+.task-done {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.log-info {
+  background: #1e3a8a;
+  color: #bfdbfe;
+}
+
+.log-warn {
+  background: #78350f;
+  color: #fde68a;
+}
+
+.log-error {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.log-critical {
+  background: #991b1b;
+  color: white;
+}
